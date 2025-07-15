@@ -1,11 +1,3 @@
-# Setup:
-
-# Install Kafka (Confluent Community Edition).
-# Start Zookeeper and Kafka: zookeeper-server-start.sh config/zookeeper.properties, kafka-server-start.sh config/server.properties.
-# Create topic: kafka-topics.sh --create --topic user-events --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1.
-# Install dependency: pip install confluent-kafka.
-# Run: python kafka_producer.py.
-
 import json
 import time
 import random
@@ -29,10 +21,10 @@ def delivery_report(err, msg):
 
 def generate_user_event():
     return {
-        'user_id': random.randint(1, 1000),
-        'event_type': random.choice(['purchase', 'click', 'view']),
-        'amount': round(random.uniform(10.0, 100.0), 2) if random.choice([True, False]) else None,
-        'timestamp': int(time.time())
+        'user_id': f"user{random.randint(1, 1000)}",
+        'age': random.randint(18, 80),
+        'transaction_amount': round(random.uniform(10.0, 500.0), 2),
+        'timestamp': time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
     }
 
 def main():

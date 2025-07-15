@@ -1,5 +1,29 @@
-# feature-store
-Distributed Real-Time Feature Store for Machine Learning
+# Distributed Real-Time Feature Store for Machine Learning
+
+This project implements a distributed feature store for machine learning, ingesting data via Kafka, processing it in real-time, storing features in PostgreSQL, and serving them via a FastAPI endpoint.
+
+## Setup
+1. Ensure Virtusl Environment is activated: `source ~/feature-store/venv/bin/activate` and Docker is running.
+2. Start Kafka and PostgreSQL: `cd docker && docker-compose up -d`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Ensure Topic Exists: `kafka-topics.sh --create --topic user-events --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1`
+5. Run the producer: `python3 producer/feature_producer.py`
+6. Start the API: `python3 api/feature_api.py`
+7. Run the consumer: `python3 consumer/feature_consumer.py`
+8. Access features: `curl http://localhost:8000/features/user1`
+
+## Structure
+- `producer/`: Kafka producer to ingest feature data.
+- `consumer/`: Kafka consumer to process and store features.
+- `api/`: FastAPI server to serve features.
+- `docker/`: Docker configurations for PostgreSQL.
+
+## Test:
+- Use `curl http://localhost:8000/features/user123` (replace `user123` with a generated `user_id`).
+- Verify Redis caching with `redis-cli`:
+    - Connect: `docker exec -it <redis-container-name> redis-cli` (redis-container-name can be found from `docker ps`)
+    - Check keys: `KEYS feature:*`
+    - Get a feature: `GET feature:user123`
 
 # Docker commands for setting up and testing Kafka
 
@@ -62,3 +86,4 @@ Check for errors: grep ERROR ~/confluent/logs/*.
 ## Monitoring:
 log producer/consumer metrics (e.g., delivery latency) using Python’s logging.
 Optional: Add Prometheus (Docker-based) for advanced metrics.
+
