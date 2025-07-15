@@ -5,11 +5,16 @@ Distributed Real-Time Feature Store for Machine Learning
 
 ## Prerequisite:
 Install Homebrew: on terminal
-```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)```
+
+```<bash>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
+```
 Verify: brew --version (e.g., Homebrew 4.3.x)
 
 Java: Kafka requires Java (JDK 11+)
-```brew install openjdk@17```
+```bash
+brew install openjdk@17
+```
 brew install openjdk@17
 
 Python:
